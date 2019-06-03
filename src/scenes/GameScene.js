@@ -2,6 +2,9 @@ import Bullet from '../sprites/Bullet';
 import Player from '../sprites/Player';
 import Enemy from '../sprites/Enemy';
 import Ball from '../sprites/Ball';
+import Ring from '../sprites/Ring';
+import Item from '../sprites/Item';
+import Heart from '../sprites/Heart';
 
 class GameScene extends Phaser.Scene {
   constructor(test) {
@@ -11,13 +14,24 @@ class GameScene extends Phaser.Scene {
   }
   create(){
 
+    this.gameOver = false;
+
+    this.gameOverText;
+
     this.score = 0;
     
     this.scoreText = this.add.text(60, 20, this.score).setScrollFactor(0, 0);
 
     this.hp = 100;
+    this.hpMax = 100;
+    
+    this.hp_bar = this.add.sprite(100, 20, 'hp_bar');
+    this.hp_bar.displayWidth = 100;
+    this.hp_bar.displayWidthMax = 100;
+    this.hp_bar.displayOriginX = 0;
+    this.hp_bar.displayOriginY = 0;
 
-    this.hpText = this.add.text(100, 20, this.hp).setScrollFactor(0, 0);
+    // this.hpText = this.add.text(100, 20, this.hp).setScrollFactor(0, 0);
 
     this.enemyGroup = this.add.group();
 
@@ -33,6 +47,12 @@ class GameScene extends Phaser.Scene {
     this.player_line = this.physics.add.sprite(160, 340, 'player_line');
 
     this.player_line.type = "player_line";
+
+
+
+
+    // this.hp_bar.setScale(10);
+
 
     // this.playerBullets = this.physics.add.group();
 
@@ -52,7 +72,12 @@ class GameScene extends Phaser.Scene {
         enemy.collide(enemy,bullet)
       }
     );
-
+    this.physics.add.overlap(this.itemGroup, this.bulletGroup,
+      function(item,bullet){
+        
+        item.collide(bullet)
+      }
+    );
     
     this.keys = {
       TOUCH_START_X: 0,
@@ -88,6 +113,8 @@ class GameScene extends Phaser.Scene {
     this.btn_stop_flg = false;
 
     this.btn_stop.on('pointerdown', function (pointer) {
+
+      console.log("btn_stop click ");
       if(this.scene.btn_stop_flg === false){
         this.scene.btn_stop_flg = true;
         this.scene.physics.world.pause();
@@ -99,7 +126,7 @@ class GameScene extends Phaser.Scene {
     });
 
     this.shootTimer = this.time.addEvent({
-      delay: 1000,
+      delay: 2000,
       callback: function() {
         // 0〜300までの乱数を吐き出す
         var randNum = Math.floor(Math.random()*(300-0)+0);
@@ -109,36 +136,103 @@ class GameScene extends Phaser.Scene {
           x: randNum,
           y: -40,
         });
-        // laser.setScale(this.scaleX);
         this.enemyGroup.add(ball);
       },
       callbackScope: this,
       loop: true
     });
+    this.shootTimer2 = this.time.addEvent({
+      delay: 1000,
+      callback: function() {
+        // 0〜300までの乱数を吐き出す
+        var randNum = Math.floor(Math.random()*(300-0)+0);
+        var ring = new Ring({
+          scene: this,
+          key: 'ring',
+          x: randNum,
+          y: -40,
+        });
+        this.enemyGroup.add(ring);
+      },
+      callbackScope: this,
+      loop: true
+    });
 
+    this.heartTimer = this.time.addEvent({
+      delay: 4000,
+      callback: function() {
+        // 0〜300までの乱数を吐き出す
+        var randNum = Math.floor(Math.random()*(300-0)+0);
+        var heart = new Heart({
+          scene: this,
+          key: 'heart',
+          x: randNum,
+          y: -40,
+        });
+        this.itemGroup.add(heart);
+      },
+      callbackScope: this,
+      loop: true
+    });
+
+    this.menu = this.add.container(160, 200).setScrollFactor(0, 0).setInteractive();
+    this.menu.setVisible(false);
+
+    this.title_start = this.add.sprite(10, 10, 'title_start').setScrollFactor(0, 0).setInteractive();
+
+    this.menu.add(this.title_start);
+
+    this.title_start.on('pointerdown', function (pointer) {
+
+      this.scene.resetGame();
+
+    });
+
+    this.menu.on('pointerdown', function (pointer) {
+      console.log("menu click");
+    });
   }
 
   update(time, delta) {
+    if (this.gameOver === true){
+      this.gameOverText = this.add.text(90, 128, "GAME OVER", {
+        fontFamily: 'monospace',
+        fontSize: 24,
+        fontStyle: 'bold',
+        color: '#ffffff',
+        style:{
+        }
+      });
+      this.menu.setVisible(true);
 
+
+      this.physics.world.pause();
+      // this.shootTimer = false;
+      this.shootTimer.remove(false);
+      return false;
+    }
     this.player.update(this.keys, time, delta);
 
     this.enemyGroup.children.entries.forEach(
       (sprite) => {
         sprite.update(time, delta);
       }
-    );
-    // this.bulletGroup.children.entries.forEach(
-    //   (sprite) => {
-    //     sprite.update(time, delta);
-    //   }
-    // );
+    );  
+
+
 
   }
   updateScore(score){
     this.scoreText.text = Number(this.scoreText.text) + Number(score);
   }
   updateHp(damage){
-    this.hpText.text = Number(this.hpText.text) - Number(damage);
+    // this.hp_bar.scaleX = (this.hp - Number(damage) ) / this.hpMax;
+    this.hp = this.hp - Number(damage);
+    if(this.hp <= 0){
+      this.gameOver = true;
+    }else{
+      this.hp_bar.displayWidth = this.hp_bar.displayWidthMax*( (this.hp - Number(damage) ) / this.hpMax);
+    }
   }
 
   enemyCollision(){
@@ -146,6 +240,9 @@ class GameScene extends Phaser.Scene {
   }
   playerLineCollision(){
     console.log("playerLineCollision");
+  }
+  resetGame(){
+    this.scene.start('GameScene');
   }
 
 }

@@ -21,7 +21,7 @@ class BootScene extends Phaser.Scene {
             // prepare all animations, defined in a separate file
             makeAnimations(this);
             progress.destroy();
-            this.scene.start('GameScene');
+            this.scene.start('TitleScene');
         });
 
         this.load.image('title', 'assets/images/title.png');
@@ -30,6 +30,7 @@ class BootScene extends Phaser.Scene {
         this.load.image('player', 'assets/images/player.png');
         this.load.image('player_line', 'assets/images/player_line.png');
         this.load.image('bullet_s', 'assets/images/bullet_s.png');
+        this.load.image('hp_bar', 'assets/images/hp_bar.png');
 
         // this.load.image('tiles', 'assets/images/tileset.png');
         // this.load.tilemapTiledJSON('map', 'assets/tilemaps/tilemap.json');
@@ -40,7 +41,7 @@ class BootScene extends Phaser.Scene {
         this.load.spritesheet('explosion_s', 'assets/images/explosion_s.png', { frameWidth: 16, frameHeight: 16 });
         this.load.spritesheet('explosion_l', 'assets/images/explosion_l.png', { frameWidth: 64, frameHeight: 64 });
         this.load.spritesheet('ring', 'assets/images/ring.png', { frameWidth: 16, frameHeight: 16 });
-
+        this.load.spritesheet('heart', 'assets/images/heart.png', { frameWidth: 16, frameHeight: 16 });
     
     }
 }

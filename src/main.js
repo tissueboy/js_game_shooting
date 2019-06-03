@@ -1,7 +1,7 @@
 import 'phaser';
 import BootScene from './scenes/BootScene';
+import TitleScene from './scenes/TitleScene';
 import GameScene from './scenes/GameScene';
-// import TitleScene from './scenes/TitleScene';
 
 const config = {
     // For more settings see <https://github.com/photonstorm/phaser/blob/master/src/boot/Config.js>
@@ -17,12 +17,12 @@ const config = {
             gravity: {
                 y: 0
             },
-            debug: false
+            debug: true
         }
     },
     scene: [
         BootScene,
-        // TitleScene,
+        TitleScene,
         GameScene
     ]
 };

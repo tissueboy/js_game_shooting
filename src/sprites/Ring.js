@@ -1,18 +1,20 @@
-import Item from './Item';
+import Enemy from './Enemy';
 
-export default class Heart extends Item {
+export default class Ring extends Enemy {
   constructor(config) {
     super(config);
 
-    this.type = "heart"
+    this.type = "ring"
 ;
     this.scene.anims.create({
-      key: 'heartAnime',
+      key: 'ringAnime',
       frames: this.scene.anims.generateFrameNumbers(config.key, { start: 0, end: 5 }),
       frameRate: 10,
       repeat: -1
     });
-    this.anims.play('heartAnime', true);
+    this.anims.play('ringAnime', true);
+    this.attackPoint = 5;
+    this.body.setVelocityY(40);
   }
   create(){
     
