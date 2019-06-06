@@ -13,7 +13,7 @@ export default class Ring extends Enemy {
       repeat: -1
     });
     this.anims.play('ringAnime', true);
-    this.attackPoint = 5;
+    this.attackPoint = 10;
     this.body.setVelocityY(40);
   }
   create(){

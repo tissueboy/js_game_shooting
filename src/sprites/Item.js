@@ -16,23 +16,14 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
 
   collide(obj){
 
-    if(obj.type === "bullet"){
+    console.log("obj.type="+obj.type);
 
+    if(obj.type === "player_line"){
     
-      this.scene.hp = this.scene.hp + this.add_hp;
-
-      console.log("this.scene.hp="+this.scene.hp);
-
-      if(this.scene.hpMax <= this.scene.hp){
-
-        this.scene.hp = this.scene.hpMax;
-
-      }
-
-      console.log("this.scene.hp==="+this.scene.hp);
-
+      this.scene.updateHp(this.add_hp);
 
     }
+
     this.destroy();
 
   }  

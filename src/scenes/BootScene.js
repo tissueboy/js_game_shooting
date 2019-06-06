@@ -32,6 +32,11 @@ class BootScene extends Phaser.Scene {
         this.load.image('bullet_s', 'assets/images/bullet_s.png');
         this.load.image('hp_bar', 'assets/images/hp_bar.png');
 
+        this.load.image('boss1_head', 'assets/images/boss1_head.png');
+        this.load.image('boss1_hand1', 'assets/images/boss1_hand1.png');
+        this.load.image('boss1_hand2', 'assets/images/boss1_hand2.png');
+
+
         // this.load.image('tiles', 'assets/images/tileset.png');
         // this.load.tilemapTiledJSON('map', 'assets/tilemaps/tilemap.json');
         //spritesheetは画像のサイズを合わせないとframe errorになる...

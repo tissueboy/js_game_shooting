@@ -69,7 +69,6 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
   }
   bullet(){
-    // console.log("this.x==="+this.x);
     var bullet = new Bullet({
       scene: this.scene,
       key: 'bullet_s',

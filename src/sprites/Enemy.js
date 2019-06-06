@@ -31,10 +31,7 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
   }
 
   collide(enemy,obj){
-
-    console.log("obj.type=="+obj.type);
-
-
+    
       if(obj.type === "bullet"){
 
         enemy.hp = enemy.hp - obj.attackPoint;
@@ -42,7 +39,7 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
       }
       if(obj.type === "player_line" && this.alive === true){
 
-        this.scene.updateHp(enemy.attackPoint);
+        this.scene.updateHp(enemy.attackPoint*-1);
 
         enemy.explode();
   
@@ -52,12 +49,7 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
         enemy.explode();
         this.scene.updateScore(enemy.experience);
       }
-  
 
-    // else{
-    //   this.alpha = 1;
-    //   this.damage();
-    // }
   }  
   explode(){
 

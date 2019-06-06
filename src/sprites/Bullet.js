@@ -3,8 +3,6 @@ export default class Bullet extends Phaser.GameObjects.Sprite {
 
 			super(config.scene,config.x,config.y,config.key,config.vx,config.vy);
       
-      console.log("=============ball");
-
       this.type = "bullet";
 
 			config.scene.physics.world.enable(this);
@@ -17,7 +15,9 @@ export default class Bullet extends Phaser.GameObjects.Sprite {
 		}
 
     update(time, delta) {
-
+      if(this.y > 480 || this.y < 0 || this.x < 0 || this.x > 320){
+        this.destroy();
+      }
     }
 
     collided() {

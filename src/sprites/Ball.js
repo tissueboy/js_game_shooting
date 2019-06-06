@@ -13,11 +13,12 @@ export default class Ball extends Enemy {
       repeat: -1
     });
     this.anims.play('ballAnime', true);
-    this.attackPoint = 10;
+    this.attackPoint = 20;
   }
   create(){
     
   }
   update(){
+
   }
 }
