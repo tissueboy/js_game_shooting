@@ -25,8 +25,8 @@ class GameScene extends Phaser.Scene {
 
     this.score = 0;
 
-    this.hp = 10000;
-    this.hpMax = 10000;
+    this.hp = 100;
+    this.hpMax = 100;
 
     this.scoreText = this.add.text(60, 20, this.score).setScrollFactor(0, 0);
 
@@ -282,7 +282,7 @@ class GameScene extends Phaser.Scene {
       this.heartTimer.remove(false);
     
       this.bossTimer = this.time.addEvent({
-        delay: 4000,
+        delay: 6000,
         callback: function() {
           // if()
           this.boss1.visible = true;

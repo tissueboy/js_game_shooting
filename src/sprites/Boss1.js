@@ -9,7 +9,7 @@ export default class Boss1 extends Phaser.GameObjects.Sprite {
     this.x = config.x;
     this.y = config.y;
 
-    this.hp = 100;
+    this.hp = 8;
 
     this.visible = false;
 
@@ -35,10 +35,10 @@ export default class Boss1 extends Phaser.GameObjects.Sprite {
 
     this.alive = true;
 
-    this.boss1_hand1 = this.scene.add.sprite(this.x, this.y, 'boss1_hand1');
+    this.boss1_hand1 = this.scene.add.sprite(this.x, this.y + 20, 'boss1_hand1');
     this.boss1_hand1.visible = false;
 
-    this.boss1_hand2 = this.scene.add.sprite(this.x, this.y, 'boss1_hand2');
+    this.boss1_hand2 = this.scene.add.sprite(this.x, this.y + 20, 'boss1_hand2');
     this.boss1_hand2.visible = false;
 
     config.scene.physics.world.enable(this.boss1_hand1);
